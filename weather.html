@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+    crossorigin="anonymous">
+    <link href="style.css" rel="stylesheet">
+
+
+    <title>Weather App</title>
+</head>
+<body>
+    
+<div class="container">
+    <div class="card mx-auto mb-5 mt-5 m-0 p-0">
+        <div class="card-body m-0 p-0">
+          <h5 class="card-title mt-3 ps-2"> <a href="index.html"><i class="fa fa-arrow-left p-2" style="font-size:18px"></i> Weather App </a></h5>
+          <hr>
+            <div class="Weather">
+            <div class="weather d-flex justify-content-center">
+            <img src="" class="weather-icon" id="weather-img">
+            </div>
+            <h2 class="temp text-center">22°C</h2>
+            <h3 class="city text-center mb-5"><i class="fa fa-map-marker me-2" style="font-size:18px; color:grey;"></i>New York</h3>
+
+            <div class="horizontal-line"></div>
+
+            <div class="details mt-2 ps-4 p-2">
+            <div class="col">
+                    <img src="images/humidity.png">
+                    <div>
+                    <p class="humidity">50%</p>
+                    <p>Humidity</p>
+                    </div>
+            </div>
+            <div class="vertical-line"></div>
+            <div class="col">
+                <img src="images/wind.png">
+                <div>
+                    <p class="wind">15 km/hr</p>
+                    <p>Wind Speed</p>
+                </div>
+            </div>
+
+            </div>
+
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script>
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const myParam = urlParams.get('apidata');
+    const data = JSON.parse(myParam)
+    updateUi(data)
+
+
+function updateUi(data) {
+    if(data!= null){
+
+        document.querySelector(".city").innerHTML = data.name;
+        document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+        document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+        document.querySelector(".wind").innerHTML = data.wind.speed + " km/hr";
+
+        var weatherIcon= document.getElementById("weather-img");
+        const currentCondition = data.weather[0].main
+       
+        if(currentCondition == "Clouds" || currentCondition.indexOf("Clouds") > -1){
+            weatherIcon.src = "images/cloud.png";
+        } else if(currentCondition == "Clear" || currentCondition.indexOf("Clear") > -1){
+            weatherIcon.src = "images/clear.png";
+        }else if(currentCondition == "Rain" || currentCondition.indexOf("Rain") > -1){
+            weatherIcon.src = "images/rain.png";
+        }else if(currentCondition == "Drizzle" || currentCondition.indexOf("Drizzle") > -1){
+            weatherIcon.src = "images/drizzle.png";
+        }else if(currentCondition == "Mist" || currentCondition.indexOf("Mist") > -1){
+            weatherIcon.src = "images/mist.png";
+        }else if(currentCondition == "Haze" || currentCondition.indexOf("Haze") > -1){
+            weatherIcon.src = "images/haze1.png";
+        }else if(currentCondition == "Snow" || currentCondition.indexOf("Snow") > -1){
+            weatherIcon.src = "images/snow.png";
+        }else{
+            weatherIcon.src = "images/clear.png";
+        }
+    }
+
+}
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
